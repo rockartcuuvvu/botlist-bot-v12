@@ -1,30 +1,30 @@
 const Discord = require("discord.js");
-const ayarlar = require("../ayarlar.json");
+const settings = require("../settings.json");
 const db = require("croxydb");
 
 exports.run = async (client, message, args) => {
   
   if (!message.member.hasPermission("ADMINISTRATOR"))
-    return message.reply(`Bu komutu kullanabilmek için \`Yönetici\` iznine sahip olmalısın!`);
+    return message.reply(`You must have \`Admin\` permission to use this command!`);
   if (!args[0])
-    return message.channel.send(`**Yanlış kullanım.** \n\`Örnek:\` **b!başvuru-kanal ayarla** \`#kanal\``);
-  if (args[0] === "ayarla") {
+    return message.channel.send(`**Incorrect usage.** \n\`Example:\` **b!reference-set channel** \`#channel\``);
+  if (args[0] === "set") {
     let channel = message.mentions.channels.first();
     if (!channel) {
-      return message.channel.send(`**Yanlış kullanım.** \n\`Örnek:\` **b!başvuru-kanal ayarla** \`#kanal\``);
+      return message.channel.send(`**Incorrect usage.** \n\`Example:\` **b!reference-set channel** \`#channel\``);
     }
-    db.set(`basvuru.kanal_${message.guild.id}`, channel.id);
+    db.set(`submission.channel_${message.guild.id}`, channel.id);
     let a = new Discord.MessageEmbed()
-    .setTitle("Başvuru kanalı ayarlandı")
-    .setDescription("```Başvuru kanalı ayarlandı. Botlist sisteminin düzgün çalışması için diğer ayarlarıda yapınız.```")
-    .addField("Ayarlanan Kanal", `<#${channel.id}>`)
+    .setTitle("Reference channel set")
+    .setDescription("```Reference channel is set. Please make other settings for botlist system to work properly.```")
+    .addField("Configured Channel", `<#${channel.id}>`)
     .setFooter(client.user.username, client.user.avatarURL())
     .setTimestamp()
     .setColor("#f698d4");
     message.channel.send(a)
-  } else if (args[0] === "sıfırla") {
-    db.delete(`basvuru.kanal_${message.guild.id}`);
-    message.channel.send("Başarıyla sıfırlandı.");
+  } else if (args[0] === "reset") {
+    db.delete(`application.channel_${message.guild.id}`);
+    message.channel.send("Reset successfully.");
   }
 };
 
@@ -36,7 +36,7 @@ exports.conf = {
 };
 
 exports.help = {
-  name: "başvuru-kanal",
-  description: "Başvuru kanalını ayarlar.",
-  usage: "başvuru-kanal #kanal"
+  name: "reference-channel",
+  description: "Sets referral channel.",
+  usage: "reference-channel #channel"
 };
