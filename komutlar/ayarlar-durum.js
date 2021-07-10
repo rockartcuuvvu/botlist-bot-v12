@@ -3,71 +3,71 @@ const db = require("croxydb")
 
 exports.run = async (client, message, args) => {
 
-if (message.author.id !== 'sahip id' && message.author.id !== "sahip id 2")return message.reply("Sen sahibim değilsin!")
+if (message.author.id !== 'owner id' && message.author.id !== "owner id 2")return message.reply("You are not the owner!")
 
 
-  let başvuru_kanal = await db.get(`basvuru.kanal_${message.guild.id}`)
-  let başvuru_log = await db.get(`basvuru.log_${message.guild.id}`)
-  let yetkili_log = await db.get(`yetkili.log_${message.guild.id}`)
-  let yetkili_rol = await db.get(`yetkili.rol_${message.guild.id}`)
-  let developer_rol = await db.get(`developer.rol_${message.guild.id}`)
-  let bot_rol = await db.get(`bot.rol_${message.guild.id}`)
+  let reference_channel = await db.get(`application.channel_${message.guild.id}`)
+  let reference_log = await db.get(`application.log_${message.guild.id}`)
+  let authorized_log = await db.get(`authorized.log_${message.guild.id}`)
+  let authorized_role = await db.get(`authorized.role_${message.guild.id}`)
+  let developer_role = await db.get(`developer.rol_${message.guild.id}`)
+  let bot_role = await db.get(`bot.role_${message.guild.id}`)
 
 
 
 
-  let başvuru_k;
-  if(!başvuru_kanal) {
-    başvuru_k = ":x:"
+  let reference_k;
+  if(!reference_channel) {
+    reference_k = ":x:"
   } else {
-    başvuru_k = `<#${başvuru_kanal}>`
+    reference_k = `<#${reference_channel}>`
   }
   
-  let başvuru_l;
-  if(!başvuru_log) {
-    başvuru_l = ":x:"
+  let reference_l;
+  if(!reference_log) {
+    reference_l = ":x:"
   } else {
-    başvuru_l = `<#${başvuru_log}>`
+    reference_l = `<#${reference_log}>`
   }
   
-  let yetkili_l;
-  if(!yetkili_log) {
-    yetkili_l = ":x:"
+  let authorized_l;
+  if(!authorized_log) {
+    authorized_l = ":x:"
   } else {
-    yetkili_l = `<#${yetkili_log}>`
+    authorized_l = `<#${authorized_log}>`
   }
   
-  let yetkili_r;
-  if(!yetkili_rol) {
-    yetkili_r = ":x:"
+  let authorized_r;
+  if(!authorized_role) {
+    authorized_r = ":x:"
   } else {
-    yetkili_r = `<@&${yetkili_rol}>`
+    authorized_r = `<@&${authorized_role}>`
   }
   
   let bot_r;
-  if(!bot_rol) {
+  if(!bot_role) {
     bot_r = ":x:"
   } else {
-    bot_r = `<@&${bot_rol}>`
+    bot_r = `<@&${bot_role}>`
   }
   
   let dev_r;
-  if(!developer_rol) {
+  if(!developer_role) {
     dev_r = ":x:"
   } else {
-    dev_r = `<@&${developer_rol}>`
+    dev_r = `<@&${developer_role}>`
   }
   
   
 
     let botlist = new dc.MessageEmbed()
-     .setAuthor(message.guild.name + " sunucusunun botlist ayarları")
-     .addField("Başvuru Kanal", başvuru_k, true)
-     .addField("Başvuru Log", başvuru_l, true)
-     .addField("Yetkili Log", yetkili_l, true)
-     .addField("Yetkili Rol", yetkili_r, true)
-     .addField("Developer Rol", dev_r, true)
-     .addField("Bot Rol", bot_r, true)
+     .setAuthor(message.guild.name + " botlist settings of the server")
+     .addField("Reference Channel", reference_k, true)
+     .addField("Reference Log", reference_l, true)
+     .addField("Authorized Log", authorized_l, true)
+     .addField("Authorized Role", authorized_r, true)
+     .addField("Developer Role", dev_r, true)
+     .addField("Bot Role", bot_r, true)
      .setColor("#f698d4")
      .setThumbnail(message.guild.iconURL({dynamic: true}))
      .setFooter(client.user.username, client.user.avatarURL())
@@ -82,6 +82,5 @@ exports.conf = {
  permLevel: 0
 };
 exports.help = {
-  name: "ayarlar-durum"
+  name: "settings-state"
 };
-
